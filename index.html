@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>صفحة مفاجآت غريبة</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(45deg, #222, #555);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    font-family: 'Arial', sans-serif;
+    color: white;
+    text-align: center;
+    transition: background 2s ease;
+  }
+
+  h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    animation: colorChange 5s infinite alternate;
+  }
+
+  p {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+    animation: floatText 6s ease-in-out infinite;
+  }
+
+  button {
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    background: #ff4081;
+    color: white;
+    box-shadow: 0 0 10px #ff4081;
+    transition: transform 0.3s ease;
+  }
+  button:hover {
+    transform: scale(1.1);
+    background: #e040fb;
+    box-shadow: 0 0 20px #e040fb;
+  }
+
+  /* دوائر بتظهر وتختفي */
+  .circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.7;
+    animation: fadeOut 4s forwards;
+  }
+
+  /* تحريك النص */
+  @keyframes floatText {
+    0%, 100% { transform: translateY(0); color: #ff4081; }
+    50% { transform: translateY(-20px); color: #40c4ff; }
+  }
+
+  /* تغيير لون النص */
+  @keyframes colorChange {
+    0% { color: #ff4081; }
+    50% { color: #40c4ff; }
+    100% { color: #ff4081; }
+  }
+
+  /* اختفاء الدوائر */
+  @keyframes fadeOut {
+    0% { opacity: 0.7; transform: scale(1); }
+    100% { opacity: 0; transform: scale(2); }
+  }
+</style>
+</head>
+<body>
+
+<h1>مرحباً بك في صفحة المفاجآت!</h1>
+<p>اضغط على الأزرار وشوف إيش المفاجأة اللي مجهزة لك</p>
+<button id="surpriseBtn">إضغط هنا للمفاجأة</button>
+
+<script>
+  // تغيير الخلفية بشكل عشوائي كل 3 ثواني
+  function randomColor() {
+    return `hsl(${Math.floor(Math.random() * 360)}, 70%, 30%)`;
+  }
+
+  function changeBackground() {
+    document.body.style.background = `linear-gradient(45deg, ${randomColor()}, ${randomColor()})`;
+  }
+  setInterval(changeBackground, 3000);
+
+  // عمل دوائر عشوائية تظهر وتختفي
+  function createCircle() {
+    const circle = document.createElement('div');
+    circle.classList.add('circle');
+    const size = Math.random() * 100 + 30;
+    circle.style.width = size + 'px';
+    circle.style.height = size + 'px';
+    circle.style.backgroundColor = `hsl(${Math.floor(Math.random() * 360)}, 80%, 60%)`;
+    circle.style.top = Math.random() * window.innerHeight + 'px';
+    circle.style.left = Math.random() * window.innerWidth + 'px';
+    circle.style.animationDuration = (Math.random() * 3 + 2) + 's';
+
+    document.body.appendChild(circle);
+
+    setTimeout(() => {
+      circle.remove();
+    }, 4000);
+  }
+  setInterval(createCircle, 500);
+
+  // زر المفاجأة
+  const btn = document.getElementById('surpriseBtn');
+  btn.addEventListener('click', () => {
+    const surprises = [
+      '🎉 تهانينا! لقد ربحت قطة رقمية! 🐱',
+      '⚡ فجأة! حدثت عاصفة من النجوم! ✨',
+      '👽 هل رأيت الفضائي؟ إنه هنا! 👾',
+      '🌈 لقد اكتشفت قوس قزح سري! 🌟',
+      '🔥 اشتعلت النيران... لكن لا تخف، كلها مجرد تأثير! 🔥'
+    ];
+    alert(surprises[Math.floor(Math.random() * surprises.length)]);
+  });
+</script>
+
+</body>
+</html>
